@@ -250,6 +250,7 @@ function keyPressed(){
   } else if(keyCode == 49) { // keycode for '1'
     poseNum = 1;
     var newRow = table.addRow();
+    newRow.setString("SpineBase_x", "NEW RECORDING"); 
     newRow.setString("SpineBase_x", "POSE 1");
   } else if(keyCode == 50) { // keycode for '2'
     poseNum = 2;

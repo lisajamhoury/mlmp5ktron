@@ -11,7 +11,10 @@ def print_click(unused_addr, *args):
 	pose = args
 	pred = clf.predict([pose])
 	print(pred)
-	client.send_message("/prediction", pred)
+
+	if pred:  
+		print("got it: ", pred)
+		client.send_message("/prediction", pred)
 
 if __name__ == "__main__":
 	clf = joblib.load('classifier/machinelearning.pkl')

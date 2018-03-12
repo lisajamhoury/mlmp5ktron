@@ -57,33 +57,38 @@ Now, check if your computer is 32 bit or 64 bit. To do this, go to Control Panel
 
 ### Recording Instructions
 
-11. Press 1
+1. Press 1
 2. Make a pose and hit record (r)
 3. Stop recording (r)
 4. Repeat steps 2 and 3 with a few of your partners doing the same pose from step 2
 5. Repeat steps 1-4 but press 2 or 3 to record data for new poses!
-6. Hit save (s). Save the file in KinectRecordingMovement/data
+6. Hit save (s). Save the file in KinectRecordingMovement/bodydata.csv
 
 You can close the recording sketch now. 
 
 ## Step 2: Let the Machine Learn!
 
 ---
-**Note**
-For Windows users only 
+**Note: For Windows Users**
+
 First, we need to make sure Python has been installed. (This is only for Window users, Python comes standard in Mac).
+
 Open the Command Prompt and type Python. If it says Python 3.5.xx ...., you're all set! If not, please download [Python](https://www.python.org/downloads/windows). We want the 3.5.4 release, and use the Windows x86-64 MSI installer. Open the installer and make sure the "Put Python in Path" is selected.
 
-**If you have both python2 and python3, the trick is to rename the python3 executable to python3.\
+If you have both python2 and python3, the trick is to rename the python3 executable to python3.
 
-For window users you'll need the get\_pip.py file if you don't already have pip installed. The get\_pip.py is included in this repo. Run ```python get\_pip.py```
+You'll need the get\_pip.py file if you don't already have pip installed. The get\_pip.py is included in this repo. Run 
+
+```python get\_pip.py```
 
 Once this is complete add C:\Python27\Scripts to your PATH, then close and reopen your terminal.
----
 
 ---
-**Note** 
-For Mac users only
+
+
+---
+**Note: For Mac Users **
+
 This next step requires python3. If you have both python2 and python3 installed, you can do [this](https://stackoverflow.com/questions/10763440/how-to-install-python3-version-of-package-via-pip-on-ubuntu) to run python3 without overriding python2. 
 
 --- 
@@ -95,10 +100,10 @@ Open a new terminal tab or window.
 In the new terminal tab install scikit-learn. 
 
 ```
-// On mac 
+// On Mac 
 pip install scikit-learn
 
-// on pc
+// On PC
 python -m pip install scikit-learn
 
 ```

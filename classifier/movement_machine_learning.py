@@ -19,12 +19,18 @@ labels = []
 currPose = ""
 
 # open our csv file 
-with open('../KinectRecordingMovement/data/test.csv', 'rt') as inp:
+with open('../KinectRecordingMovement/data/bodydata.csv', 'rt') as inp:
 	# keep track of what row we're at
 	counter = 0
 	for row in csv.reader(inp):
+		print("starting: ", currPose)
+
 		if counter < 2:
 			counter += 1
+			continue
+		if "POSE" in row[0]:
+			currPose = row[0];
+			print("got pose:", currPose)
 			continue
 		if hasNumbers(row[0]) and "POSE" not in row[0]:
 			# get test data
@@ -34,10 +40,6 @@ with open('../KinectRecordingMovement/data/test.csv', 'rt') as inp:
 			else:
 				features.append(row[:])
 				labels.append(currPose)
-		if "POSE" in row[0]:
-			currPose = row[0];
-			continue
-		
 
 # features2 = [[3,4,5,6],[2,4,6,7]]
 # labels2 = ['happy', 'sad']
