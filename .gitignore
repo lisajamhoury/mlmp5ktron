@@ -1,4 +1,7 @@
+node_modules
+py3env
 *.csv
 /data
 .DS_Store
 *.pkl
+package-lock.json

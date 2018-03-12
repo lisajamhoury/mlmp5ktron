@@ -52,9 +52,10 @@ function setup() {
     table.addColumn(bones[i]+"_Orientation_z");
   }
 
-  kinectron = new Kinectron();
-  //kinect.enableColorImg(true);
 
+  // Define and create an instance of kinectron
+  var kinectronIpAddress = "10.0.1.5"; // FILL IN YOUR KINECTRON IP ADDRESS HERE
+  kinectron = new Kinectron(kinectronIpAddress);
   //enable 3d  with (x,y,z) position
   //kinect.enableSkeleton3DMap(true);
 
@@ -223,7 +224,7 @@ function drawBone(joints, jointType1, jointType2) {
 function recordData(joints){
   console.log('recordin!');
   var newRow = table.addRow();
-  for(var i=0; i<joints.length-1; i++){
+  for(var i=0; i<joints.length; i++){
     newRow.setNum(bones[i] + "_x", joints[i].cameraX);
     newRow.setNum(bones[i] + "_y", joints[i].cameraY);
     newRow.setNum(bones[i] + "_z", joints[i].cameraZ);

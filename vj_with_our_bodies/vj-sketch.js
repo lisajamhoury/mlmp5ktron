@@ -35,7 +35,10 @@ function setup() {
 }
 
 function initKinectron() {
-  kinectron = new Kinectron();
+
+  // Define and create an instance of kinectron
+  var kinectronIpAddress = "10.0.1.5"; // FILL IN YOUR KINECTRON IP ADDRESS HERE
+  kinectron = new Kinectron(kinectronIpAddress);
 
   kinectron.makeConnection();
   kinectron.startMultiFrame(["color", "body"], processKinectData);

@@ -14,7 +14,7 @@ def print_click(unused_addr, *args):
 	client.send_message("/prediction", pred)
 
 if __name__ == "__main__":
-	clf = joblib.load('classifer/machinelearning.pkl')
+	clf = joblib.load('classifier/machinelearning.pkl')
 
 	# client is the sending port (port 12000). this is where we will send to
 	client = udp_client.SimpleUDPClient("127.0.0.1", 12000)
