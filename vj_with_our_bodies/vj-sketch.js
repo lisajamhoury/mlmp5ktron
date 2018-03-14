@@ -11,6 +11,14 @@ Kat Sullivan
  
  */
 
+// Set to true if using live kinectron data
+var liveData = false;
+
+// recorded data variables
+var sentTime = Date.now();
+var currentFrame = 0;
+var connected = false;
+
 var socket;
 var myCanvas;
 
@@ -31,7 +39,26 @@ function setup() {
   myCanvas = createCanvas(1024, 768);
   setupOsc(12000, 3334);
 
-  //initKinectron();
+}
+
+function loopRecordedData() {
+  
+  // send data every 20 seconds 
+  if (Date.now() > sentTime + 20) {
+    //bodyTracked(recorded_skeleton[currentFrame])
+    var data = {};
+    // data.color = null;
+    data.body = recorded_skeleton[currentFrame];
+    processKinectData(data);
+    sentTime = Date.now();
+
+    if (currentFrame < recorded_skeleton.length-1) {
+      currentFrame++;
+    } else {
+      currentFrame = 0;
+    }
+  }
+
 }
 
 function initKinectron() {
@@ -39,9 +66,13 @@ function initKinectron() {
   // Define and create an instance of kinectron
   var kinectronIpAddress = "10.0.1.5"; // FILL IN YOUR KINECTRON IP ADDRESS HERE
   kinectron = new Kinectron(kinectronIpAddress);
+  connected = true;
 
-  kinectron.makeConnection();
-  kinectron.startMultiFrame(["color", "body"], processKinectData);
+  if (liveData) {
+    kinectron.makeConnection();
+    kinectron.startMultiFrame(["color", "body"], processKinectData);  
+  }
+  
 }
 
 // FOR TESTING OSC 
@@ -130,6 +161,7 @@ function setupOsc(oscPortIn, oscPortOut) {
 
 
 function draw() {
+  if (!liveData && connected) loopRecordedData();
 
 }
 
@@ -147,43 +179,14 @@ function processKinectData(data) {
   translate(width/2, height/2);
   
   if (data.body) {
-  
-    var skeletonArray =  data.body;
 
-    // if one or more body is tracked, loop through each body
-    // NOTE - this code is meant to only track one body, modifications will be needed for multi-person recording
-    for (var i = 0; i < skeletonArray.length; i++) {
-      var skeleton = skeletonArray[i];
+    if (liveData) {
+      findTrackedBodies(data.body);
+    }
 
-      if (skeleton.tracked) {
-        var joints = skeleton.joints;
-
-        var col;
-
-        //Draw body
-        if(pose == "POSE 1") {
-          col = color(255,0,0);
-        } else if(pose == "POSE 2") {
-          col = color(0,255,0);
-        } else if(pose == "POSE 3") {
-          col = color(0,0,255);
-        } else {
-          col  = color(255, 105, 180);
-        }
-
-        stroke(col);
-        if (showBody) {
-          drawBody(joints);
-        }
-
-        if(interval % 100 === 0) {
-          sendData(joints);
-        }
-        interval++;
-      
-      } // skeleton tracked 
-
-    } // skeleton array loop
+    if (!liveData) {
+      drawTrackedBody(data.body);
+    }
     
   } // data.body
 
@@ -191,6 +194,65 @@ function processKinectData(data) {
 
 } // process kinect data
 
+
+function findTrackedBodies(bodies) {
+
+  var skeletonArray =  bodies;
+
+  // if one or more body is tracked, loop through each body
+  // NOTE - this code is meant to only track one body, modifications will be needed for multi-person recording
+  for (var i = 0; i < skeletonArray.length; i++) {
+    var skeleton = skeletonArray[i];
+
+    if (skeleton.tracked) {
+      drawTrackedBody(skeleton);
+    
+    } // skeleton tracked 
+
+  } // skeleton array loop
+
+}
+
+
+function drawTrackedBody(skeleton) {
+  var joints = skeleton.joints;
+
+  var col;
+
+  //Draw body
+  if(pose == "POSE 1") {
+    col = color(255,0,0);
+  } else if(pose == "POSE 2") {
+    col = color(0,255,0);
+  } else if(pose == "POSE 3") {
+    col = color(0,0,255);
+  } else {
+    col  = color(255, 105, 180);
+  }
+
+  stroke(col);
+  if (showBody) {
+    drawBody(joints);
+  }
+
+  if(interval % 100 === 0) {
+    sendData(joints);
+  }
+  interval++;
+
+}
+
+function keyPressed() {
+  if (keyCode === ENTER) {
+    kinectron.stopAll();
+  } else if (keyCode === UP_ARROW) {
+    kinectron.startRecord();
+  } else if (keyCode === DOWN_ARROW) {
+    kinectron.stopRecord();
+  } else if (key === '8') {
+    kinectron.startMultiFrame(['color', 'depth', 'body']);
+  }
+}
 
 
 function drawBody(joints) {
