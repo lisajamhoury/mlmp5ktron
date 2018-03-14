@@ -2,7 +2,7 @@
 
 [Kat Sullivan's Machine Learning Moving project](https://github.com/katsully/machines-learning-movement) ported to p5.js using Kinectron.
 
-These instructions are for Mac. If you're working on a PC, go to README_win.md for tips for Windows users.
+This document has tips for Windows users. Go to the README.md for instructions just for Mac. 
 
 ## Let's Run It
 
@@ -68,7 +68,25 @@ You can close the recording sketch now.
 ## Step 2: Let the Machine Learn!
 
 ---
-**Note**
+**Note: For Windows Users**
+
+First, we need to make sure Python has been installed. (This is only for Window users, Python comes standard in Mac).
+
+Open the Command Prompt and type Python. If it says Python 3.5.xx ...., you're all set! If not, please download [Python](https://www.python.org/downloads/windows). We want the 3.5.4 release, and use the Windows x86-64 MSI installer. Open the installer and make sure the "Put Python in Path" is selected.
+
+If you have both python2 and python3, the trick is to rename the python3 executable to python3.
+
+You'll need the get\_pip.py file if you don't already have pip installed. The get\_pip.py is included in this repo. Run 
+
+```python get\_pip.py```
+
+Once this is complete add C:\Python27\Scripts to your PATH, then close and reopen your terminal.
+
+---
+
+
+---
+**Note: For Mac Users **
 
 This next step requires python3. If you have both python2 and python3 installed, you can do [this](https://stackoverflow.com/questions/10763440/how-to-install-python3-version-of-package-via-pip-on-ubuntu) to run python3 without overriding python2. 
 
@@ -81,28 +99,67 @@ Open a new terminal tab or window.
 In the new terminal tab install scikit-learn. 
 
 ```
+// On Mac 
 pip install scikit-learn
+
+// On PC
+python -m pip install scikit-learn
 
 ```
 
 Install numpy+mlk
 
+For Windows users: 
+
+Install numpy+mlk libraries: download the numpy+mkl [file](http://www.lfd.uci.edu/~gohlke/pythonlibs/#numpy). I downloaded the 64 bit for Python 3.5. Then cd into downloads and 
+
+```pip install numpy‑1.11.3+mkl‑cp35‑cp35m‑win_amd64.whl```
+
+For Mac users: 
+
 ```pip install nltk```
+
+---
+**Note**
+
+If you get an error filename.whl is not supported wheel on this platform, you may be using a 32bit version of Python, to double check out the python interpreter and write
+
+```
+import platform
+platform.architecture()[0]
+```
+
+This will either print 32bit or 64bit. Obviously, if it says 32bit you'll need to download the appropriate wheel file.
+
+Else, rename the file to numpy‑1.11.3+mkl‑cp35‑none-any.whl and rerun pip install.
+
+---
 
 Install scipy
 
+For Windows Users
+
+To do so, download the whl file [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/#scipy) Then cd into downloads and 
+
+```pip install scipy-0.19.1-cp35-cp35m-win_amd64.whl```
+
+For Mac Users
+
 ```pip install scipy```
+
+
+Finally, open the movement_machine_learning.py (in the classifer folder) file with a text editor (ie Sublime Text).
 
 In terminal, run
 
-```
+```python classifier/movement_machine_learning.py```
 
-python classifier/movement_machine_learning.py
+OR
 
-// if you have both python2 and python3 on your machine
-python3 classifier/movement_machine_learning.py
+```python3 classifier/movement_machine_learning.py```
 
-```
+if you have both python2 and python3 on your machine.
+
 
 ### Step 3: Make something cool!
 
@@ -159,6 +216,5 @@ python python-osc.py
 
 ```
 
-Your trained classifier is now guessing your poses based on the trained data your previously recorded. Now decide what should happen with each pose!
 
 
