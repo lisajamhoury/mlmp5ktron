@@ -15,7 +15,7 @@ Dan Shiffman
  */
 
 // Set to true if using live kinectron data
-var liveData = true;
+var liveData = false;
 
 // for kinectron -- live kinect data
 var kinectron;
@@ -118,6 +118,7 @@ function initKinectron() {
 
 function setupPositionVars() {
   // setup positioning variables for skeleton
+
   jointWeight = myCanvas.width/100;
   centerX = myCanvas.width/2
   centerY = myCanvas.height/2;
@@ -158,11 +159,11 @@ function processKinectData(data) {
   fill(255);
   text(pose, myCanvas.width-bodyOffSetX*1.5, myCanvas.height-bodyOffSetY*1.5,);
   
-  if (data.bodies) {
+  if (data.body) {
 
-    if (liveData) findTrackedBodies(data.bodies);
+    if (liveData) findTrackedBodies(data.body);
   
-    if (!liveData) drawTrackedBody(data.bodies);    
+    if (!liveData) drawTrackedBody(data.body);    
   
   } 
 } 
@@ -216,6 +217,7 @@ function setupOsc(oscPortIn, oscPortOut) {
   socket.on('connect', function() {
 
     initKinectron();
+
     socket.emit('config', { 
       server: { port: oscPortIn,  host: '127.0.0.1'},
       client: { port: oscPortOut, host: '127.0.0.1'}
