@@ -89,7 +89,7 @@ function loopRecordedData() {
     //bodyTracked(recorded_skeleton[currentFrame])
     var data = {};
     // data.color = null;
-    data.body = recorded_skeleton[currentFrame];
+    data.bodies = recorded_skeleton[currentFrame];
     processKinectData(data);
     sentTime = Date.now();
 
@@ -141,7 +141,9 @@ function setupSineVars() {
 }
 
 function processKinectData(data) {
+  
   if (liveData) {
+    //console.log('here');
     background(0);
 
     // draw sine waves 
@@ -159,11 +161,11 @@ function processKinectData(data) {
   fill(255);
   text(pose, myCanvas.width-bodyOffSetX*1.5, myCanvas.height-bodyOffSetY*1.5,);
   
-  if (data.body) {
+  if (data.bodies) {
 
-    if (liveData) findTrackedBodies(data.body);
+    if (liveData) findTrackedBodies(data.bodies);
   
-    if (!liveData) drawTrackedBody(data.body);    
+    if (!liveData) drawTrackedBody(data.bodies);    
   
   } 
 } 
